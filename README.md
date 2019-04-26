@@ -19,7 +19,7 @@ To install via the Python Package Index (PyPI), type:
 To get the source code of the SDK via git just type:
 
 ```python
-git clone git://github.com/Azure/azure-kusto-python.git
+git clone https://github.com/akashperfect/azure-kusto-python.git
 cd ./azure-kusto-python/azure-kusto-data
 python setup.py install
 cd ../azure-kusto-ingest
