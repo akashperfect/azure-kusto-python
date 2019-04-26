@@ -5,6 +5,7 @@ from datetime import timedelta, datetime
 import webbrowser
 from six.moves.urllib.parse import urlparse
 import dateutil.parser
+import subprocess
 
 from adal import AuthenticationContext, AdalError
 from adal.constants import TokenResponseFields, OAuth2DeviceCodeResponseParameters
@@ -91,7 +92,7 @@ class _AadHelper(object):
         elif self._authentication_method is AuthenticationMethod.aad_device_login:
             code = self._adal_context.acquire_user_code(self._kusto_cluster, self._client_id)
             print(code[OAuth2DeviceCodeResponseParameters.MESSAGE])
-            webbrowser.open(code[OAuth2DeviceCodeResponseParameters.VERIFICATION_URL])
+            process = subprocess.Popen(['python', 'login.py', code[OAuth2DeviceCodeResponseParameters.MESSAGE]], stdout=subprocess.PIPE)
             token = self._adal_context.acquire_token_with_device_code(self._kusto_cluster, code, self._client_id)
         elif self._authentication_method is AuthenticationMethod.aad_application_certificate:
             token = self._adal_context.acquire_token_with_client_certificate(
