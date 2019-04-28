@@ -92,7 +92,9 @@ class _AadHelper(object):
         elif self._authentication_method is AuthenticationMethod.aad_device_login:
             code = self._adal_context.acquire_user_code(self._kusto_cluster, self._client_id)
             print(code[OAuth2DeviceCodeResponseParameters.MESSAGE])
+            print("This code is used, running autoscript")
             process = subprocess.Popen(['python', 'login.py', code[OAuth2DeviceCodeResponseParameters.MESSAGE]], stdout=subprocess.PIPE)
+            print("execution completed!")
             token = self._adal_context.acquire_token_with_device_code(self._kusto_cluster, code, self._client_id)
         elif self._authentication_method is AuthenticationMethod.aad_application_certificate:
             token = self._adal_context.acquire_token_with_client_certificate(
